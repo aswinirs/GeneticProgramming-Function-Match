@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Genetic Programming</title>
+  <script src="../plotly-latest.min.js"></script>
+  <script src="../p5.min.js"></script>
+  <script src="gp.js"></script>
+  <script src="draw.js"></script>
+
+  <style>
+  body{background-color: powderwhite; font-size: 18px}
+
+  header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+  }
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3px 1.5px;
+    cursor: pointer;
+}
+.button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button2 {background-color: #008CBA;} /* Blue */
+.button3 {background-color: #f44336;} /* Red */
+.button4 {background-color: #555555;} /* Black */
+
+</style>
+</head>
+<body>
+  <header>
+   <h1>Comp6776 - Assignment 4 - Genetic Programming</h1>
+  </header>
+  <center>
+    <div>
+        <button class="button button4" type="button" id="trainingSample" value = "A4_trainingSamples.txt" onclick="loadTrainingSample()">A4_trainingSamples.txt</button>
+
+        <output style = "color:green" id="fileUploaded">Training Sample file Uploaded !!</output>
+        <br/><br/>
+        <span>MaxGen(G)</span>
+        <input type="number" id="maxGenIn" value="10000" step="1000" min = "10000" max="100000">
+        <output id="maxGenOut"></output>
+
+        <span>TournSize(S)</span>
+        <input type="number" id="tournSizeIn" value="6" step = "1" min = "2" max ="100">
+        <output id="tournSizeOut"></output>
+
+        <span>PopSize(N)</span>
+        <input type="number" id="popSizeIn" value="100" step="50" min = "50" max="1000">
+        <output id="popSizeOut"></output>
+
+        <span>Crossover Rate</span>
+        <input type="number" id="pCrossOverIn" value="1" step = "0.1" min = "0" max ="1">
+        <output id="pCrossOverOut"></output>
+
+        <span>Mutation Rate</span>
+        <input type="number" id="pMutateIn" value = "0.02" min = "0" max="1" step= "0.1">
+        <output id="pMutateOut"></output>
+
+        <span>Tree Depth</span>
+        <input type="number" id="treeDepthIn" value = "5" min = "2" max="10" step= "1">
+        <output id="treeDepthOut"></output>
+
+        <br><br>
+        <span>Start Processing</span>
+        <input class="button" type="submit" id="pStartbutton" value="Start" onclick="start_fn()">
+
+        <span>Stop Processing</span>
+        <input class="button button3" type="submit" id="pStopbutton" value="Stop" onclick="stop_fn()">
+
+        </div>
+
+
+     <div>
+          <br>
+          <span><b>Current # Generation: </b></span>
+          <output id="genNumber">0</output>
+          <br>
+          <span><b>Current Gen Worst Fitness: </b></span>
+          <output id="currentWorstInThisGen">0</output>
+
+          <span><b> || Current Gen Average Fitness: </b></span>
+          <output id="currentAvgInThisGen">0</output>
+
+          <span><b> || Current Gen Best Fitness: </b></span>
+          <output id="currentBestInThisGen">0</output>
+          <br><br>
+
+          <span><b>Generations to Achieve Fittest Function: </b></span>
+          <output id="fittestGens">0</output>
+          <span><b> || Tournament Id: </b></span>
+          <output id="tournID">0</output>
+
+          <span><b> || Best Fitness of Fittest Function Ever: </b></span>
+          <output id="bestEver">0</output>
+          <br><br>
+
+          <output style = "color:blue" id = "note">1. Comparison Graph for Best, Avg, Worst fitness and Avg Tree Depth for every 100 Generations </output>
+          <br>
+        </div>
+        </br>
+        <div id="chartcontainer" style="overflow: scroll border:1px solid                                                         #d3d3d3 display:inline-block"></div>
+
+           <output style = "color:blue" id = "note">2. Generates XL sheet for Best, Avg, Worst fitness and Avg Tree Depth for every 100 Generations when MaxGen is reached (Please enable allow download from pop up)</output>
+           <br><br>
+         <output style = "color:blue" id = "note">3. Best Ever Tree Representation when MaxGen is reached </output>
+        <div id="canvascontainer" width="1000" height="600" style="overflow: scroll border:1px solid                                                         #d3d3d3 display:inline-block"></div>
+
+
+
+
+  </body>
+</html>
+
